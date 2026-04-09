@@ -115,7 +115,7 @@ export default function Hero() {
           fontSize: 'clamp(1rem, 1.8vw, 1.4rem)', color: 'var(--text-muted)', maxWidth: '750px', marginBottom: '48px' 
         }}>
           Yeni nesil işletmeler için dijital dünyada fark yaratan çözümler. 
-          Sizi profesyonel gösterecek, **SEO uyumlu** ve **mobil öncelikli** sistemler.
+          Sizi profesyonel gösterecek, SEO uyumlu** ve mobil öncelikli** sistemler.
         </p>
       </div>
     </section>
