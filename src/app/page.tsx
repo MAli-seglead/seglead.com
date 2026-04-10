@@ -4,6 +4,10 @@ import Marquee from '@/app/components/Marquee';
 import Services from '@/app/components/Services';
 import Portfolio from '@/app/components/Portfolio';
 import Footer from '@/app/components/Footer';
+import ValueProp from './components/ValueProp';
+import Pricing from './components/Pricing';
+import Why from './components/Why';
+import Contact from './components/Contact';
 
 export default function Home() {
   return (
@@ -11,10 +15,15 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <Marquee />
+        {/* Feature Grid  <Marquee /> */}
+        <ValueProp />
         <Services />
-        <Portfolio />
+        <Portfolio /> 
+        <Why />
+        <Pricing />
+        <Contact />
       </main>
+      
       <Footer />
     </>
   );
