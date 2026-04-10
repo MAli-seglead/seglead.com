@@ -3,20 +3,134 @@
   --text: rgb(255, 255, 227);     /* Cream */
   --accent: #5DD3B6;              /* Teal/Mint */
   --text-muted: rgba(255, 255, 227, 0.6); 
-  --border: #262626;
-  --transition-smooth: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  --border: rgba(255, 255, 227, 0.1);
 }
 
-/* 1. Global Resets */
+[class='light'] {
+  --bg: rgb(255, 255, 227);
+  --text: #111111;
+  --accent: #008F72;
+  --text-muted: rgba(17, 17, 17, 0.6); 
+  --border: rgba(17, 17, 17, 0.1);
+}
+
+/* 1. Global Reset */
+/* Update these specific sections in globals.css */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  border-radius: 0 !important; /* Strict Brutalist sharp edges */
+  font-weight: 300 !important;
 }
 
-html {
-  scroll-behavior: smooth;
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  transition: background-color 0.5s ease;
+}
+
+/* Luxury Scroller Hide */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Ensure images don't have weird spacing */
+img {
+  display: block;
+}
+
+
+a {
+  text-decoration: none !important;
+  color: inherit;
+}
+
+/* 2. Navigation Layout */
+/* src/app/globals.css */
+
+.nav-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px; /* Force a fixed height so it never "shifts" */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  z-index: 1000;
+  mix-blend-mode: difference;
+  pointer-events: none; /* Allows clicks to pass through empty space to the grid */
+}
+
+.nav-item, .nav-btn-inverted {
+  pointer-events: auto; /* Re-enables clicks for the actual buttons */
+  color: #FFFFFF !important; /* Must be pure white for mix-blend-mode: difference */
+}
+
+/* Ensure main content doesn't start hidden under the fixed nav */
+main {
+  position: relative;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    height: 70px;
+    padding: 0 20px;
+  }
+}
+
+/* 3. Visual Backgrounds */
+.grid-lines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image: 
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 10vw 10vw;
+  opacity: 0.3;
+}
+
+/* 4. Mobile Overrides */
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 20px;
+  }
+  
+  .hide-on-mobile {
+    display: none !important;
+  }
+
+  section {
+    padding: 60px 20px !important; /* Tightened for mobile */
+  }
+
+  h1 {
+    font-size: 3.2rem !important; /* Prevents "UY UN" awkward wrapping */
+    line-height: 1.1 !important;
+  }
+}
+
+/* Rolling Text Animation Logic */
+:root {
+  --bg: #111111;
+  --text: rgb(255, 255, 227);
+  --accent: #5DD3B6;
+  --border: rgba(255, 255, 227, 0.1);
+}
+
+/* Force Light Weight 300 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-weight: 300 !important;
 }
 
 body {
@@ -26,205 +140,60 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* 2. Typography */
-h1, h2, h3, h4 {
-  font-weight: 300;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* 3. Navigation (Ghost Logic) */
-.nav-container {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 40px;
-  z-index: 999;
-  mix-blend-mode: difference;
-  pointer-events: none; /* Let clicks pass through empty space */
-}
-
-.nav-item, .nav-btn-inverted {
-  pointer-events: auto; /* Re-enable clicks for buttons */
-  color: #FFFFFF;
-  transition: var(--transition-smooth);
-}
-
-.nav-item {
-  padding: 8px 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.nav-item:hover {
-  background-color: var(--text);
-  color: #000000 !important;
-}
-
-.nav-btn-inverted {
-  border: 1px solid #FFFFFF;
-  padding: 12px 28px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-}
-
-.nav-btn-inverted:hover {
-  background-color: #FFFFFF;
-  color: #000000;
-}
-
-/* 4. Service Cards & Interaction */
-.service-card {
-  transition: var(--transition-smooth);
-  background-color: transparent;
-  position: relative;
-  overflow: hidden;
-}
-
-.service-card:hover {
-  background-color: rgba(255, 255, 255, 0.02);
-}
-
-/* The Reveal Detail Logic */
-.hover-detail {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--accent);
-  text-transform: uppercase;
-  height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: var(--transition-smooth);
-}
-
-.service-card:hover .hover-detail {
-  height: 1.2rem;
-  opacity: 1;
-  margin-top: 8px;
-}
-
-/* Arrow Interaction */
-.arrow-icon {
-  transition: var(--transition-smooth);
-  opacity: 0.2;
-}
-
-.service-card:hover .arrow-icon {
-  transform: translate(6px, -6px);
-  opacity: 1;
-  color: var(--text);
-}
-
-/* 5. Utility & Animations */
-.border-b { border-bottom: 1px solid var(--border); }
-.border-t { border-top: 1px solid var(--border); }
-.border-l { border-left: 1px solid var(--border); }
-.border-r { border-right: 1px solid var(--border); }
-
-@keyframes slowRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.rotating-icon {
-  animation: slowRotate 30s linear infinite;
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-.char-init {
-  will-change: transform, opacity;
-}
-
-/* Hide on Mobile */
-@media (max-width: 768px) {
-  .hide-on-mobile {
-    display: none !important;
-  }
-  
-  .nav-container {
-    padding: 20px;
-  }
-}
-
-.service-main-h2 div {
-  display: block;
-}
-
-.service-main-char {
+/* The Odometer Mask */
+.roll-mask {
   display: inline-block;
-  will-change: transform, opacity;
-  /* This ensures letters don't look blurry during the roll */
-  backface-visibility: hidden; 
+  vertical-align: bottom;
+  height: 1.15em; /* This locks the dimension of the "box" */
+  overflow: hidden; /* This hides the words waiting their turn */
+  position: relative;
 }
 
+.roll-list {
+  display: block;
+  will-change: transform;
+}
 
+.roll-item {
+  height: 1.15em; /* Must match the mask height exactly */
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
 
-/* --- MOBILE RESPONSIVENESS --- */
-
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
-  /* 1. Adjust Section Spacing */
-  #services {
-    padding: 80px 20px !important;
+  h1 {
+    /* Limit size to keep "UYGUN" on one line */
+    font-size: clamp(2.0rem, 10vw, 2.6rem) !important;
+    line-height: 1.2 !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
   }
 
-  /* 2. Fix Header Grid */
-  .services-header-grid {
-    grid-template-columns: 1fr !important; /* Stack icon and text */
-    gap: 40px !important;
-    text-align: left !important;
-    margin-bottom: 60px !important;
+  .roll-mask, .roll-item {
+    height: 1.3em; /* Slightly more room for mobile line-height */
   }
 
-  /* 3. Align Header Text to Left (better for mobile reading) */
-  .services-header-grid > div:last-child {
-    text-align: left !important;
-    align-items: flex-start !important;
-  }
-
-  /* 4. Downscale the huge H2 */
-  .service-main-h2 {
-    font-size: 3rem !important; /* Cap the size so it doesn't overflow */
-    line-height: 1 !important;
-  }
-
-  /* 5. Handle the Feature Grid */
-  .border-l { border-left: none !important; } /* Remove side borders on mobile */
-  
-  .service-card {
-    padding: 40px 20px !important;
-    min-height: auto !important; /* Let content dictate height */
-  }
-
-  /* 6. Fix the absolute icon behind text on mobile */
-  .mobile-bg-icon {
-    position: absolute !important;
-    top: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0.1 !important;
-    z-index: 0;
+  section {
+    padding: 60px 20px !important;
   }
 }
 
 
 
+/* Add this to your globals.css */
 
+.desktop-only {
+  width: 100%;
+  position: relative;
+}
 
+/* This prevents the "white screen" or "disappearing" glitch */
+.pin-spacer {
+  pointer-events: none !important;
+}
 
-
-
-
-
+section {
+  will-change: transform;
+}
