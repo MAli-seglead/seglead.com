@@ -6,7 +6,8 @@ import gsap from "gsap";
 const phrases = ["İŞİNİZİ BÜYÜTEN", "SATIŞ ODAKLI", "GÖRÜNÜR", "MODERN", "AKILDA KALICI"];
 
 export default function Hero() {
-  const [activeTab, setActiveTab] = useState("design");
+  // Changed initial state from "design" to "launch"
+  const [activeTab, setActiveTab] = useState("launch");
   const rollRef = useRef<HTMLDivElement>(null);
 
   // 1. Initial Page Load Animations & Text Roller

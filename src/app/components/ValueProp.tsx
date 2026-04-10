@@ -39,8 +39,10 @@ export default function ValueProp() {
   useEffect(() => {
     if (!hasMounted) return;
 
+    let mm = gsap.matchMedia();
+
     const ctx = gsap.context(() => {
-      // 1. Background Title Parallax
+      // Background Title Parallax (applies to all sizes where visible)
       gsap.to(".vp-bg-title", {
         xPercent: -30,
         ease: "none",
@@ -52,36 +54,58 @@ export default function ValueProp() {
         }
       });
 
-      // 2. Horizontal Cards Stagger
-      gsap.from(".vp-grid-card", {
-        x: 100,
-        opacity: 0,
-        stagger: 0.2,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".vp-grid-container",
-          start: "top 80%",
-        }
+      // DESKTOP ANIMATIONS
+      mm.add("(min-width: 769px)", () => {
+        // Horizontal Cards Stagger
+        gsap.from(".vp-grid-card", {
+          x: 100,
+          opacity: 0,
+          stagger: 0.2,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".vp-grid-container",
+            start: "top 80%",
+          }
+        });
+
+        // Card Magnetic "Tilt" effect on scroll
+        gsap.utils.toArray(".vp-grid-card").forEach((card: any) => {
+          gsap.to(card, {
+            rotateY: 15,
+            scale: 0.95,
+            scrollTrigger: {
+              trigger: card,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            }
+          });
+        });
       });
 
-      // 3. Card Magnetic "Tilt" effect on scroll
-      gsap.utils.toArray(".vp-grid-card").forEach((card: any) => {
-        gsap.to(card, {
-          rotateY: 15,
-          scale: 0.95,
+      // MOBILE ANIMATIONS
+      mm.add("(max-width: 768px)", () => {
+        // Simple vertical fade-up to prevent mobile overflow and lag
+        gsap.from(".vp-grid-card", {
+          y: 50,
+          opacity: 0,
+          stagger: 0.15,
+          duration: 0.8,
+          ease: "power3.out",
           scrollTrigger: {
-            trigger: card,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
+            trigger: ".vp-grid-container",
+            start: "top 85%",
           }
         });
       });
 
     }, containerRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      mm.revert(); // Clean up matchMedia
+    };
   }, [hasMounted]);
 
   if (!hasMounted) return null;
@@ -182,10 +206,43 @@ export default function ValueProp() {
         }
 
         @media (max-width: 768px) {
-          .vp-grid-container { grid-template-columns: 1fr; }
-          .vp-modern-section { padding: 100px 5vw; }
-          .lux-h2 { font-size: 2.2rem; }
-          .vp-bg-title { display: none; }
+          .vp-modern-section { 
+            padding: 100px 5vw; 
+            min-height: auto; 
+          }
+          .vp-header {
+            margin-bottom: 50px;
+          }
+          .lux-h2 { 
+            font-size: 2.2rem; 
+          }
+          .vp-bg-title { 
+            display: none; 
+          }
+          .vp-grid-container { 
+            grid-template-columns: 1fr; 
+            gap: 15px; 
+          }
+          .vp-grid-card { 
+            padding: 35px 25px; /* Reduced padding for mobile */
+          }
+          .card-top {
+            margin-bottom: 25px;
+          }
+          .card-h3 { 
+            font-size: 1.5rem; 
+            margin-bottom: 15px;
+          }
+          .card-p { 
+            min-height: auto; /* Remove fixed height on mobile */
+          }
+          .card-line {
+            margin-top: 20px;
+            width: 15%; /* Show a small line by default on mobile since hover doesn't exist */
+          }
+          .vp-grid-card:active .card-line { 
+            width: 100%; /* Expands when tapped on mobile */
+          }
         }
       `}} />
     </section>

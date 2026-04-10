@@ -1,3 +1,4 @@
+/* 1. CSS Variables / Themes */
 :root {
   --bg: #111111;
   --text: rgb(255, 255, 227);     /* Cream */
@@ -6,7 +7,7 @@
   --border: rgba(255, 255, 227, 0.1);
 }
 
-[class='light'] {
+.light {
   --bg: rgb(255, 255, 227);
   --text: #111111;
   --accent: #008F72;
@@ -14,9 +15,7 @@
   --border: rgba(17, 17, 17, 0.1);
 }
 
-/* 1. Global Reset */
-/* Update these specific sections in globals.css */
-
+/* 2. Global Resets & Body */
 * {
   margin: 0;
   padding: 0;
@@ -24,10 +23,16 @@
   font-weight: 300 !important;
 }
 
+html, body {
+  max-width: 100vw;
+  width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   background-color: var(--bg);
   color: var(--text);
-  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
   transition: background-color 0.5s ease;
 }
 
@@ -42,46 +47,15 @@ img {
   display: block;
 }
 
-
 a {
   text-decoration: none !important;
   color: inherit;
-}
-
-/* 2. Navigation Layout */
-/* src/app/globals.css */
-
-.nav-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 90px; /* Force a fixed height so it never "shifts" */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 40px;
-  z-index: 1000;
-  mix-blend-mode: difference;
-  pointer-events: none; /* Allows clicks to pass through empty space to the grid */
-}
-
-.nav-item, .nav-btn-inverted {
-  pointer-events: auto; /* Re-enables clicks for the actual buttons */
-  color: #FFFFFF !important; /* Must be pure white for mix-blend-mode: difference */
 }
 
 /* Ensure main content doesn't start hidden under the fixed nav */
 main {
   position: relative;
   width: 100%;
-}
-
-@media (max-width: 768px) {
-  .nav-container {
-    height: 70px;
-    padding: 0 20px;
-  }
 }
 
 /* 3. Visual Backgrounds */
@@ -97,50 +71,7 @@ main {
   opacity: 0.3;
 }
 
-/* 4. Mobile Overrides */
-@media (max-width: 768px) {
-  .nav-container {
-    padding: 20px;
-  }
-  
-  .hide-on-mobile {
-    display: none !important;
-  }
-
-  section {
-    padding: 60px 20px !important; /* Tightened for mobile */
-  }
-
-  h1 {
-    font-size: 3.2rem !important; /* Prevents "UY UN" awkward wrapping */
-    line-height: 1.1 !important;
-  }
-}
-
-/* Rolling Text Animation Logic */
-:root {
-  --bg: #111111;
-  --text: rgb(255, 255, 227);
-  --accent: #5DD3B6;
-  --border: rgba(255, 255, 227, 0.1);
-}
-
-/* Force Light Weight 300 */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-weight: 300 !important;
-}
-
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* The Odometer Mask */
+/* 4. Rolling Text Animation Logic */
 .roll-mask {
   display: inline-block;
   vertical-align: bottom;
@@ -161,10 +92,33 @@ body {
   white-space: nowrap;
 }
 
-/* Mobile Responsiveness */
+/* 5. GSAP Animation Fixes */
+.desktop-only {
+  width: 100%;
+  position: relative;
+}
+
+/* This prevents the "white screen" or "disappearing" glitch in GSAP Pinning */
+.pin-spacer {
+  pointer-events: none !important;
+}
+
+section {
+  will-change: transform;
+}
+
+/* 6. Global Mobile Overrides */
 @media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+
+  section {
+    padding: 60px 20px !important; /* Tightened for mobile */
+  }
+
   h1 {
-    /* Limit size to keep "UYGUN" on one line */
+    /* Limit size to keep text on one line if possible */
     font-size: clamp(2.0rem, 10vw, 2.6rem) !important;
     line-height: 1.2 !important;
     word-break: keep-all !important;
@@ -174,26 +128,4 @@ body {
   .roll-mask, .roll-item {
     height: 1.3em; /* Slightly more room for mobile line-height */
   }
-
-  section {
-    padding: 60px 20px !important;
-  }
-}
-
-
-
-/* Add this to your globals.css */
-
-.desktop-only {
-  width: 100%;
-  position: relative;
-}
-
-/* This prevents the "white screen" or "disappearing" glitch */
-.pin-spacer {
-  pointer-events: none !important;
-}
-
-section {
-  will-change: transform;
 }
