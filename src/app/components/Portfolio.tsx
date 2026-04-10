@@ -34,8 +34,8 @@ const projects = [
 ];
 
 export default function Portfolio() {
-  const sectionRef = useRef(null);
-  const triggerRef = useRef(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -46,9 +46,9 @@ export default function Portfolio() {
         scrollTrigger: {
           trigger: triggerRef.current,
           start: "top top",
-          end: () => `+=${sectionRef.current.offsetWidth}`,
+          end: () => `+=${sectionRef.current?.offsetWidth}`,
           pin: true,
-          scrub: 1, // Lower scrub value for more responsive feel
+          scrub: 1, 
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
@@ -71,7 +71,7 @@ export default function Portfolio() {
   }, []);
 
   return (
-    <div ref={triggerRef} className="scroll-section-outer" style={{ overflow: "hidden", backgroundColor: "var(--bg)" }}>
+    <div ref={triggerRef} className="scroll-section-outer" style={{ overflow: "hidden", backgroundColor: "var(--bg)", position: "relative" }}>
       
       {/* Background Large Text (Parallax) */}
       <div className="bg-text" style={{
