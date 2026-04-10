@@ -6,6 +6,7 @@ import Image from "next/image";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
+// Define the projects array here so it is accessible to the component
 const projects = [
   {
     title: "VANGUARD",
@@ -39,6 +40,8 @@ export default function Portfolio() {
 
   useEffect(() => {
     let ctx = gsap.context(() => {
+      if (!sectionRef.current || !triggerRef.current) return;
+
       // Horizontal Scroll Animation
       gsap.to(sectionRef.current, {
         xPercent: -100 * (projects.length - 1),
