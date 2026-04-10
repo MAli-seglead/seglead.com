@@ -14,17 +14,17 @@ const features = [
   { 
     id: "02", 
     title: "Kullanıcı Deneyimi", 
-    desc: "Ziyaretçi güveni ile kalite arasındaki boşluğu doldurarak, pürüzsüz bir dönüşüm mimarisi inşa ediyoruz. Her tıklama amaca hizmet eder." 
+    desc: "Ziyaretçi güveni ile kalite arasındaki boşluğu doldurarak, pürüzsüz bir dönüşüm mimarisi inşa ediyoruz." 
   },
   { 
     id: "03", 
     title: "Performans Mimari", 
-    desc: "Next.js 16 ve modern tech-stack ile milisaniyeler içinde yanıt veren, sarsılmaz yapılar. Hız, lüksün dijital karşılığıdır." 
+    desc: "Next.js 16 ve modern tech-stack ile milisaniyeler içinde yanıt veren, sarsılmaz yapılar kuruyoruz." 
   },
   { 
     id: "04", 
     title: "Ölçeklenebilir Kod", 
-    desc: "Gelecekteki büyümenizi bugünden kodluyoruz. Sisteminizi her an büyümeye ve yeni entegrasyonlara hazır tutuyoruz." 
+    desc: "Gelecekteki büyümenizi bugünden kodluyoruz. Sisteminizi her an yeni entegrasyonlara hazır tutuyoruz." 
   }
 ];
 
@@ -40,30 +40,45 @@ export default function ValueProp() {
     if (!hasMounted) return;
 
     const ctx = gsap.context(() => {
-      // Fade in the sticky header
-      gsap.fromTo(".vp-header-content", 
-        { opacity: 0, x: -30 },
-        { opacity: 1, x: 0, duration: 1, ease: "power3.out",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 70%",
-          }
+      // 1. Background Title Parallax
+      gsap.to(".vp-bg-title", {
+        xPercent: -30,
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
         }
-      );
-
-      // Smooth scroll reveal for each card
-      gsap.utils.toArray(".vp-card").forEach((card: any) => {
-        gsap.fromTo(card, 
-          { opacity: 0, y: 60 },
-          { opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 85%",
-              toggleActions: "play none none reverse"
-            }
-          }
-        );
       });
+
+      // 2. Horizontal Cards Stagger
+      gsap.from(".vp-grid-card", {
+        x: 100,
+        opacity: 0,
+        stagger: 0.2,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".vp-grid-container",
+          start: "top 80%",
+        }
+      });
+
+      // 3. Card Magnetic "Tilt" effect on scroll
+      gsap.utils.toArray(".vp-grid-card").forEach((card: any) => {
+        gsap.to(card, {
+          rotateY: 15,
+          scale: 0.95,
+          scrollTrigger: {
+            trigger: card,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          }
+        });
+      });
+
     }, containerRef);
 
     return () => ctx.revert();
@@ -72,136 +87,107 @@ export default function ValueProp() {
   if (!hasMounted) return null;
 
   return (
-    <section 
-      ref={containerRef} 
-      className="vp-section"
-      style={{ position: 'relative', width: '100%' }}
-    >
-      {/* Inheriting your EXACT global grid lines! 
-        This guarantees perfect alignment with the Hero section.
-      */}
-      <div className="grid-lines" />
-
-      {/* RESPONSIVE STYLES */}
-      <style dangerouslySetInnerHTML={{__html: `
-        .vp-section {
-          padding: 150px 5vw;
-          max-width: 1600px;
-          margin: 0 auto;
-        }
-        .vp-grid {
-          display: flex;
-          align-items: flex-start;
-          gap: 5vw;
-          position: relative;
-          z-index: 2;
-        }
-        .vp-left {
-          width: 40%;
-          position: sticky;
-          top: 200px; /* Adjust this to control where it sticks */
-        }
-        .vp-right {
-          width: 60%;
-          display: flex;
-          flex-direction: column;
-          gap: 40px;
-          margin-top: 100px;
-          padding-bottom: 100px;
-        }
-        .vp-card {
-          background-color: rgba(255, 255, 255, 0.02);
-          backdrop-filter: blur(12px);
-          border: 1px solid var(--border);
-          border-radius: 24px;
-          padding: 60px 50px;
-          transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .vp-card:hover {
-          border-color: rgba(93, 211, 182, 0.3);
-          transform: translateY(-5px);
-          box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-        
-        @media (max-width: 960px) {
-          .vp-section { padding: 100px 5vw; }
-          .vp-grid { flex-direction: column; gap: 60px; }
-          .vp-left { width: 100%; position: relative; top: 0; }
-          .vp-right { width: 100%; margin-top: 0; padding-bottom: 0; }
-          .vp-card { padding: 40px 30px; }
-        }
-      `}} />
-
-      <div className="vp-grid">
-        
-        {/* LEFT COLUMN: STICKY HEADER */}
-        <div className="vp-left">
-          <div className="vp-header-content">
-            {/* Reused your exact badge style from the Hero */}
-            <div style={{ 
-              backgroundColor: 'rgba(93, 211, 182, 0.1)', color: 'var(--accent)', 
-              padding: '8px 16px', borderRadius: '100px', fontSize: '0.85rem', fontWeight: 500,
-              marginBottom: '20px', border: '1px solid rgba(93, 211, 182, 0.2)', display: 'inline-flex', alignItems: 'center', gap: '8px'
-            }}>
-              <span>✦</span> DEĞER ÖNERİMİZ
-            </div>
-
-            <h2 style={{ 
-              fontSize: 'clamp(2.4rem, 4vw, 4rem)', 
-              lineHeight: 1.1, 
-              letterSpacing: '-0.03em', 
-              color: 'var(--text)', 
-              fontWeight: 500 
-            }}>
-              Estetik ve mühendisliğin <br />
-              <span style={{ color: 'var(--accent)' }}>kesişim noktası.</span>
-            </h2>
-          </div>
+    <section ref={containerRef} className="vp-modern-section">
+      {/* Visual Depth Background */}
+      <div className="vp-bg-title">QUALITY • ENGINEERING • VISION • STANDARDS •&nbsp;</div>
+      
+      <div className="vp-content">
+        <div className="vp-header">
+          <div className="lux-tag">✦ DEĞERLERİMİZ</div>
+          <h2 className="lux-h2">Vizyonunuzu <br/> <span>Kodluyoruz.</span></h2>
         </div>
 
-        {/* RIGHT COLUMN: SCROLLING CARDS */}
-        <div className="vp-right">
-          {features.map((feature, i) => (
-            <div key={i} className="vp-card">
-              
-              <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
-                <span style={{ 
-                  color: 'var(--bg)', 
-                  backgroundColor: 'var(--accent)', 
-                  padding: '4px 10px', 
-                  borderRadius: '6px', 
-                  fontFamily: 'monospace', 
-                  fontSize: '0.8rem', 
-                  fontWeight: 700 
-                }}>
-                  {feature.id}
-                </span>
+        <div className="vp-grid-container">
+          {features.map((f, i) => (
+            <div key={i} className="vp-grid-card">
+              <div className="card-top">
+                <span className="card-index">{f.id}</span>
+                <div className="card-glow" />
               </div>
-              
-              <h3 style={{ 
-                color: 'var(--text)', 
-                fontSize: '2rem', 
-                fontWeight: 500, 
-                marginBottom: '15px', 
-                letterSpacing: '-0.02em' 
-              }}>
-                {feature.title}
-              </h3>
-              
-              <p style={{ 
-                color: 'var(--text-muted)', 
-                fontSize: '1.1rem', 
-                lineHeight: 1.6, 
-                maxWidth: '90%' 
-              }}>
-                {feature.desc}
-              </p>
-
+              <h3 className="card-h3">{f.title}</h3>
+              <p className="card-p">{f.desc}</p>
+              <div className="card-line" />
             </div>
           ))}
         </div>
-
       </div>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        .vp-modern-section {
+          background-color: var(--bg);
+          padding: 180px 5vw;
+          position: relative;
+          overflow: hidden;
+          min-height: 100vh;
+        }
+
+        .vp-bg-title {
+          position: absolute;
+          top: 10%;
+          left: 0;
+          font-size: 20vw;
+          font-weight: 900;
+          color: white;
+          opacity: 0.03;
+          white-space: nowrap;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .vp-content {
+          position: relative;
+          z-index: 2;
+          max-width: 1400px;
+          margin: 0 auto;
+        }
+
+        .vp-header {
+          margin-bottom: 80px;
+        }
+        .lux-tag { font-size: 0.7rem; letter-spacing: 0.6em; color: var(--accent); margin-bottom: 20px; }
+        .lux-h2 { font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--text); font-weight: 400; line-height: 1; }
+        .lux-h2 span { color: var(--accent); }
+
+        .vp-grid-container {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 25px;
+        }
+
+        .vp-grid-card {
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid var(--border);
+          padding: 50px 40px;
+          position: relative;
+          backdrop-filter: blur(10px);
+          transition: border-color 0.4s ease;
+          perspective: 1000px;
+        }
+        .vp-grid-card:hover {
+          border-color: var(--accent);
+          background: rgba(255, 255, 255, 0.04);
+        }
+
+        .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; }
+        .card-index { font-family: monospace; color: var(--accent); font-size: 1.1rem; }
+        .card-glow { width: 40px; height: 1px; background: var(--accent); opacity: 0.3; }
+
+        .card-h3 { font-size: 1.8rem; color: #fff; margin-bottom: 20px; font-weight: 500; letter-spacing: -0.02em; }
+        .card-p { font-size: 1rem; color: var(--text-muted); line-height: 1.6; min-height: 100px; }
+        .card-line { width: 0%; height: 2px; background: var(--accent); margin-top: 30px; transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .vp-grid-card:hover .card-line { width: 100%; }
+
+        @media (max-width: 1200px) {
+          .vp-grid-container { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+          .vp-grid-container { grid-template-columns: 1fr; }
+          .vp-modern-section { padding: 100px 5vw; }
+          .lux-h2 { font-size: 2.2rem; }
+          .vp-bg-title { display: none; }
+        }
+      `}} />
     </section>
   );
 }
