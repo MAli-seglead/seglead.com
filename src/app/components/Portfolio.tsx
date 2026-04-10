@@ -129,7 +129,7 @@ export default function Portfolio() {
                 border: "1px solid var(--border)",
                 overflow: "hidden"
               }}>
-                <Image 
+                <image 
                   src={project.img} 
                   alt={project.title} 
                   fill 
