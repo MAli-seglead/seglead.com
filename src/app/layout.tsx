@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+import { Providers } from './providers';
 
 const satoshi = localFont({
   src: [
@@ -39,8 +40,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="tr">
-      <body className={satoshi.className}>{children}</body>
+    <html lang="tr" suppressHydrationWarning>
+      <body className={satoshi.className}>
+        <Providers>
+          {children}
+        </Providers>
+      </body>
     </html>
   );
 }
