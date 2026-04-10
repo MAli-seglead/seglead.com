@@ -132,7 +132,7 @@ export default function Portfolio() {
                 <image 
                   src={project.img} 
                   alt={project.title} 
-                  fill 
+                  fill='image' 
                   priority={i === 0}
                   sizes="50vw"
                   style={{ 
