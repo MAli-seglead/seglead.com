@@ -92,7 +92,7 @@ export default function Contact() {
         </h2>
 
         <div className="contact-actions">
-          <a href="mailto:hello@seglead.com" className="lux-btn">
+          <a href="form" className="lux-btn">
             PROJEYİ BAŞLAT
           </a>
         </div>

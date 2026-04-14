@@ -112,7 +112,7 @@ export default function Hero() {
           </div>
 
           <h1 className="hero-headline hero-fade-in">
-            <span className="hero-line">Yeni nesil markalar için</span>
+            <span className="hero-line">Yeni markalar için</span>
 
             <span className="hero-roller">
               <span className="hero-roller-viewport">
@@ -127,7 +127,7 @@ export default function Hero() {
               </span>
             </span>
 
-            <span className="hero-line">web siteleri.</span>
+            <span className="hero-line">web siteler.</span>
           </h1>
 
           <p className="hero-text hero-fade-in">

@@ -255,7 +255,7 @@ export default function Pricing() {
           border-radius: 18px;
           overflow: hidden;
           background: rgba(0, 0, 0, 0.4);
-          backdrop-filter: blur(8px);
+          background: rgba(0, 0, 0, 0.55);
           transition:
             transform 0.35s ease,
             border-color 0.3s ease,

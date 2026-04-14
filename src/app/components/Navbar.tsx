@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 
 const navItems = [
   { label: 'Hizmetler', href: '#services' },
-  { label: 'İşler', href: '#portfolio' },
-  { label: 'Fiyatlar', href: '#pricing' },
+  { label: 'İşler', href: '/portfilo' },
+  { label: 'Fiyatlar', href: '#/' },
   { label: 'İletişim', href: '#contact' },
 ];
 
@@ -46,7 +46,7 @@ export default function Navbar() {
               </a>
             ))}
 
-            <a href="#contact" className="nav-link nav-link-cta">
+            <a href="form" className="nav-link nav-link-cta">
               <span>Projeyi Başlat</span>
             </a>
           </div>

@@ -193,7 +193,7 @@ export default function ValueProp() {
           padding: 42px 32px;
           background: rgba(255, 255, 255, 0.015);
           border: 1px solid var(--border);
-          backdrop-filter: blur(8px);
+          background: rgba(0, 0, 0, 0.55);
           transition:
             border-color 0.35s ease,
             background 0.35s ease,
