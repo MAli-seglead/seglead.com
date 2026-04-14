@@ -370,52 +370,53 @@ export default function Hero() {
           transition: opacity 0.45s ease-in-out;
         }
 
-        .hero-overflow {
-          position: absolute;
-          inset: 0;
-          overflow: visible;
-          pointer-events: none;
-          z-index: 5;
-        }
+.hero-overflow {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 5;
+}
 
-        .smoke-2 {
-          position: absolute;
-          left: 50%;
-          bottom: -15%;
-          width: 140%;
-          opacity: 0;
-          object-fit: contain;
-        }
+.smoke-2 {
+  position: absolute;
+  left: 50%;
+  bottom: -9%;
+  width: 128%;
+  opacity: 0;
+  object-fit: contain;
+}
 
-        .smoke-1 {
-          position: absolute;
-          left: 50%;
-          bottom: -8%;
-          width: 100%;
-          opacity: 0;
-          object-fit: contain;
-        }
+.smoke-1 {
+  position: absolute;
+  left: 50%;
+  bottom: -3%;
+  width: 94%;
+  opacity: 0;
+  object-fit: contain;
+}
 
-        .rocket-element {
-          position: absolute;
-          left: 50%;
-          bottom: 12%;
-          width: 28%;
-          opacity: 0;
-          object-fit: contain;
-        }
+.rocket-element {
+  position: absolute;
+  left: 50%;
+  bottom: 14%;
+  width: 28%;
+  opacity: 0;
+  object-fit: contain;
+}
 
-        .hero-tabs {
-          display: flex;
-          gap: 8px;
-          margin-top: 12px;
-          padding: 6px;
-          border-radius: 12px;
-          border: 1px solid var(--border);
-          background: rgba(255, 255, 255, 0.03);
-          backdrop-filter: blur(10px);
-        }
-
+.hero-tabs {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 8;
+}
         .hero-tabs button {
           border: none;
           padding: 8px 18px;

@@ -27,9 +27,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       wheelMultiplier: 1,
     });
 
-    lenis.on("scroll", () => {
-      ScrollTrigger.update();
-    });
+    lenis.on("scroll", ScrollTrigger.update);
 
     const raf = (time: number) => {
       lenis.raf(time * 1000);
@@ -56,8 +54,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
       enableSystem={false}
       disableTransitionOnChange
     >
-      <div style={{ opacity: mounted ? 1 : 0, transition: "opacity 0.5s ease" }}>
-        {children}
+      <div className="app-shell" data-mounted={mounted ? "true" : "false"}>
+        <div className="grid-lines" />
+        <div className="app-content">{children}</div>
       </div>
     </ThemeProvider>
   );

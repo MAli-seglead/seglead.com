@@ -1,27 +1,51 @@
 export default function Footer() {
-    return (
-      <footer style={{ padding: '100px 40px 40px', borderTop: '1px solid var(--border)', backgroundColor: 'var(--bg)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '60px' }}>
-          <div>
-            <h2 style={{ fontSize: '1.8rem', marginBottom: '20px' }}>SEGLEAD.</h2>
-            <p style={{ color: 'var(--text-muted)' }}>Yeni nesil dijital deneyimler.</p>
+  return (
+    <footer className="site-footer">
+      <div className="site-footer__dots" />
+
+      <div className="site-footer__main container">
+        <div className="site-footer__brand">
+          <a href="#hero" className="site-footer__logo">
+            SEGLEAD.
+          </a>
+          <p className="site-footer__desc">
+            Premium tasarım, güçlü performans ve dönüşüm odaklı web deneyimleri.
+          </p>
+          <a href="#contact" className="site-footer__mini-cta">
+            PROJEYİ BAŞLAT <span>↗</span>
+          </a>
+        </div>
+
+        <div className="site-footer__nav">
+          <div className="site-footer__col">
+            <span className="site-footer__label">NAVİGASYON</span>
+            <a href="#services">Hizmetler</a>
+            <a href="#work">İşler</a>
+            <a href="#pricing">Fiyatlar</a>
+            <a href="#contact">İletişim</a>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <span style={{ color: 'var(--accent)', fontSize: '0.8rem', fontWeight: 300 }}>NAVİGASYON</span>
-            <a href="#services" style={{ textDecoration: 'none' }}>Hizmetler</a>
-            <a href="#work" style={{ textDecoration: 'none' }}>İşler</a>
-            <a href="#pricing" style={{ textDecoration: 'none' }}>Fiyatlar</a>
+
+          <div className="site-footer__col">
+            <span className="site-footer__label">SERVİSLER</span>
+            <a href="#services">Kurumsal Web Sitesi</a>
+            <a href="#services">UI/UX Tasarım</a>
+            <a href="#services">CMS Entegrasyonu</a>
+            <a href="#services">Performans</a>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <span style={{ color: 'var(--accent)', fontSize: '0.8rem', fontWeight: 300 }}>İLETİŞİM</span>
-            <p>info@seglead.com</p>
-            <p>İstanbul, TR</p>
+
+          <div className="site-footer__col">
+            <span className="site-footer__label">İLETİŞİM</span>
+            <a href="mailto:info@seglead.com">info@seglead.com</a>
+            <span>İstanbul, Türkiye</span>
+            <span>Pzt — Cmt</span>
           </div>
         </div>
-        <div style={{ marginTop: '80px', display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-          <span>© 2024 SEGLEAD</span>
-          <span>DESIGNED BY SEGLEAD</span>
-        </div>
-      </footer>
-    );
-  }
+      </div>
+
+      <div className="site-footer__bottom container">
+        <span>© 2026 SEGLEAD</span>
+        <span>Premium dijital deneyimler</span>
+      </div>
+    </footer>
+  );
+}

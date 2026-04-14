@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
@@ -6,30 +7,30 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
 const features = [
-  { 
-    id: "01", 
-    title: "Marka Kimliği", 
-    desc: "Dijital varlığınızı mühendislik disipliniyle estetize ediyoruz. Karmaşadan uzak, net ve premium bir algı yaratıyoruz." 
+  {
+    id: "01",
+    title: "Marka Kimliği",
+    desc: "Dijital varlığınızı mühendislik disipliniyle estetize ediyoruz. Karmaşadan uzak, net ve premium bir algı yaratıyoruz.",
   },
-  { 
-    id: "02", 
-    title: "Kullanıcı Deneyimi", 
-    desc: "Ziyaretçi güveni ile kalite arasındaki boşluğu doldurarak, pürüzsüz bir dönüşüm mimarisi inşa ediyoruz." 
+  {
+    id: "02",
+    title: "Kullanıcı Deneyimi",
+    desc: "Ziyaretçi güveni ile kalite arasındaki boşluğu doldurarak, pürüzsüz bir dönüşüm mimarisi inşa ediyoruz.",
   },
-  { 
-    id: "03", 
-    title: "Performans Mimari", 
-    desc: "Next.js 16 ve modern tech-stack ile milisaniyeler içinde yanıt veren, sarsılmaz yapılar kuruyoruz." 
+  {
+    id: "03",
+    title: "Performans Mimarisi",
+    desc: "Next.js 16 ve modern tech-stack ile milisaniyeler içinde yanıt veren, sarsılmaz yapılar kuruyoruz.",
   },
-  { 
-    id: "04", 
-    title: "Ölçeklenebilir Kod", 
-    desc: "Gelecekteki büyümenizi bugünden kodluyoruz. Sisteminizi her an yeni entegrasyonlara hazır tutuyoruz." 
-  }
+  {
+    id: "04",
+    title: "Ölçeklenebilir Kod",
+    desc: "Gelecekteki büyümenizi bugünden kodluyoruz. Sisteminizi her an yeni entegrasyonlara hazır tutuyoruz.",
+  },
 ];
 
 export default function ValueProp() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
@@ -37,124 +38,112 @@ export default function ValueProp() {
   }, []);
 
   useEffect(() => {
-    if (!hasMounted) return;
+    if (!hasMounted || !sectionRef.current) return;
 
-    let mm = gsap.matchMedia();
+    const mm = gsap.matchMedia();
 
     const ctx = gsap.context(() => {
-      // Background Title Parallax (applies to all sizes where visible)
       gsap.to(".vp-bg-title", {
-        xPercent: -30,
+        xPercent: -18,
         ease: "none",
         scrollTrigger: {
-          trigger: containerRef.current,
+          trigger: sectionRef.current,
           start: "top bottom",
           end: "bottom top",
           scrub: 1,
-        }
+        },
       });
 
-      // DESKTOP ANIMATIONS
       mm.add("(min-width: 769px)", () => {
-        // Horizontal Cards Stagger
         gsap.from(".vp-grid-card", {
-          x: 100,
+          y: 28,
           opacity: 0,
-          stagger: 0.2,
-          duration: 1,
+          stagger: 0.12,
+          duration: 0.85,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".vp-grid-container",
-            start: "top 80%",
-          }
-        });
-
-        // Card Magnetic "Tilt" effect on scroll
-        gsap.utils.toArray(".vp-grid-card").forEach((card: any) => {
-          gsap.to(card, {
-            rotateY: 15,
-            scale: 0.95,
-            scrollTrigger: {
-              trigger: card,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: true,
-            }
-          });
+            start: "top 82%",
+            once: true,
+          },
         });
       });
 
-      // MOBILE ANIMATIONS
       mm.add("(max-width: 768px)", () => {
-        // Simple vertical fade-up to prevent mobile overflow and lag
         gsap.from(".vp-grid-card", {
-          y: 50,
+          y: 36,
           opacity: 0,
-          stagger: 0.15,
-          duration: 0.8,
+          stagger: 0.1,
+          duration: 0.7,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".vp-grid-container",
-            start: "top 85%",
-          }
+            start: "top 88%",
+            once: true,
+          },
         });
       });
-
-    }, containerRef);
+    }, sectionRef);
 
     return () => {
       ctx.revert();
-      mm.revert(); // Clean up matchMedia
+      mm.revert();
     };
   }, [hasMounted]);
 
   if (!hasMounted) return null;
 
   return (
-    <section ref={containerRef} className="vp-modern-section">
-      {/* Visual Depth Background */}
-      <div className="vp-bg-title">QUALITY • ENGINEERING • VISION • STANDARDS •&nbsp;</div>
-      
+    <section ref={sectionRef} className="vp-modern-section">
+      <div className="vp-bg-title">QUALITY • ENGINEERING • VISION • STANDARDS •</div>
+
       <div className="vp-content">
         <div className="vp-header">
           <div className="lux-tag">✦ DEĞERLERİMİZ</div>
-          <h2 className="lux-h2">Vizyonunuzu <br/> <span>Kodluyoruz.</span></h2>
+          <h2 className="lux-h2">
+            Vizyonunuzu <br />
+            <span>Kodluyoruz.</span>
+          </h2>
         </div>
 
         <div className="vp-grid-container">
-          {features.map((f, i) => (
-            <div key={i} className="vp-grid-card">
+          {features.map((feature) => (
+            <article key={feature.id} className="vp-grid-card">
               <div className="card-top">
-                <span className="card-index">{f.id}</span>
+                <span className="card-index">{feature.id}</span>
                 <div className="card-glow" />
               </div>
-              <h3 className="card-h3">{f.title}</h3>
-              <p className="card-p">{f.desc}</p>
+
+              <h3 className="card-h3">{feature.title}</h3>
+              <p className="card-p">{feature.desc}</p>
               <div className="card-line" />
-            </div>
+            </article>
           ))}
         </div>
       </div>
 
-      <style dangerouslySetInnerHTML={{__html: `
+      <style jsx>{`
         .vp-modern-section {
-          background-color: var(--bg);
-          padding: 180px 5vw;
           position: relative;
           overflow: hidden;
-          min-height: 100vh;
+          min-height: auto;
+          background-color: var(--bg);
+          padding: 140px 5vw;
         }
 
         .vp-bg-title {
           position: absolute;
-          top: 10%;
+          top: 12%;
           left: 0;
-          font-size: 20vw;
-          font-weight: 900;
-          color: white;
-          opacity: 0.03;
+          font-size: 16vw;
+          line-height: 0.9;
+          font-weight: 800;
+          letter-spacing: -0.05em;
+          color: #fff;
+          opacity: 0.02;
           white-space: nowrap;
           pointer-events: none;
+          user-select: none;
           z-index: 0;
         }
 
@@ -166,85 +155,182 @@ export default function ValueProp() {
         }
 
         .vp-header {
-          margin-bottom: 80px;
+          margin-bottom: 68px;
+          max-width: 760px;
         }
-        .lux-tag { font-size: 0.7rem; letter-spacing: 0.6em; color: var(--accent); margin-bottom: 20px; }
-        .lux-h2 { font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--text); font-weight: 400; line-height: 1; }
-        .lux-h2 span { color: var(--accent); }
+
+        .lux-tag {
+          margin-bottom: 18px;
+          color: var(--accent);
+          font-size: 0.74rem;
+          letter-spacing: 0.45em;
+        }
+
+        .lux-h2 {
+          margin: 0;
+          color: var(--text);
+          font-size: clamp(2.6rem, 6vw, 4.8rem);
+          font-weight: 400;
+          line-height: 0.96;
+          letter-spacing: -0.05em;
+        }
+
+        .lux-h2 span {
+          color: var(--accent);
+        }
 
         .vp-grid-container {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 25px;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 24px;
         }
 
         .vp-grid-card {
-          background: rgba(255, 255, 255, 0.02);
-          border: 1px solid var(--border);
-          padding: 50px 40px;
           position: relative;
-          backdrop-filter: blur(10px);
-          transition: border-color 0.4s ease;
-          perspective: 1000px;
+          display: flex;
+          flex-direction: column;
+          min-height: 360px;
+          padding: 42px 32px;
+          background: rgba(255, 255, 255, 0.015);
+          border: 1px solid var(--border);
+          backdrop-filter: blur(8px);
+          transition:
+            border-color 0.35s ease,
+            background 0.35s ease,
+            transform 0.35s ease;
         }
+
         .vp-grid-card:hover {
-          border-color: var(--accent);
-          background: rgba(255, 255, 255, 0.04);
+          border-color: rgba(93, 211, 182, 0.3);
+          background: rgba(255, 255, 255, 0.025);
+          transform: translateY(-4px);
         }
 
-        .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; }
-        .card-index { font-family: monospace; color: var(--accent); font-size: 1.1rem; }
-        .card-glow { width: 40px; height: 1px; background: var(--accent); opacity: 0.3; }
+        .card-top {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          margin-bottom: 34px;
+        }
 
-        .card-h3 { font-size: 1.8rem; color: #fff; margin-bottom: 20px; font-weight: 500; letter-spacing: -0.02em; }
-        .card-p { font-size: 1rem; color: var(--text-muted); line-height: 1.6; min-height: 100px; }
-        .card-line { width: 0%; height: 2px; background: var(--accent); margin-top: 30px; transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        .vp-grid-card:hover .card-line { width: 100%; }
+        .card-index {
+          color: var(--accent);
+          font-family: monospace;
+          font-size: 1.05rem;
+          letter-spacing: 0.04em;
+        }
+
+        .card-glow {
+          width: 42px;
+          height: 1px;
+          background: var(--accent);
+          opacity: 0.28;
+        }
+
+        .card-h3 {
+          margin: 0 0 18px;
+          color: #fff;
+          font-size: 1.7rem;
+          line-height: 1.08;
+          font-weight: 500;
+          letter-spacing: -0.03em;
+        }
+
+        .card-p {
+          margin: 0;
+          color: var(--text-muted);
+          font-size: 1rem;
+          line-height: 1.7;
+        }
+
+        .card-line {
+          width: 0%;
+          height: 2px;
+          margin-top: auto;
+          background: var(--accent);
+          transition: width 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .vp-grid-card:hover .card-line {
+          width: 100%;
+        }
 
         @media (max-width: 1200px) {
-          .vp-grid-container { grid-template-columns: repeat(2, 1fr); }
+          .vp-modern-section {
+            padding: 120px 5vw;
+          }
+
+          .vp-grid-container {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+
+          .vp-grid-card {
+            min-height: 320px;
+          }
         }
 
         @media (max-width: 768px) {
-          .vp-modern-section { 
-            padding: 100px 5vw; 
-            min-height: auto; 
+          .vp-modern-section {
+            padding: 100px 5vw;
           }
+
+          .vp-bg-title {
+            display: none;
+          }
+
           .vp-header {
-            margin-bottom: 50px;
+            margin-bottom: 42px;
           }
-          .lux-h2 { 
-            font-size: 2.2rem; 
+
+          .lux-tag {
+            font-size: 0.72rem;
+            letter-spacing: 0.32em;
+            margin-bottom: 16px;
           }
-          .vp-bg-title { 
-            display: none; 
+
+          .lux-h2 {
+            font-size: 2.25rem;
+            line-height: 0.98;
           }
-          .vp-grid-container { 
-            grid-template-columns: 1fr; 
-            gap: 15px; 
+
+          .vp-grid-container {
+            grid-template-columns: 1fr;
+            gap: 16px;
           }
-          .vp-grid-card { 
-            padding: 35px 25px; /* Reduced padding for mobile */
+
+          .vp-grid-card {
+            min-height: auto;
+            padding: 32px 24px;
+            transform: none;
           }
+
+          .vp-grid-card:hover {
+            transform: none;
+          }
+
           .card-top {
-            margin-bottom: 25px;
+            margin-bottom: 24px;
           }
-          .card-h3 { 
-            font-size: 1.5rem; 
-            margin-bottom: 15px;
+
+          .card-h3 {
+            font-size: 1.45rem;
+            margin-bottom: 14px;
           }
-          .card-p { 
-            min-height: auto; /* Remove fixed height on mobile */
+
+          .card-p {
+            font-size: 0.98rem;
           }
+
           .card-line {
-            margin-top: 20px;
-            width: 15%; /* Show a small line by default on mobile since hover doesn't exist */
+            width: 18%;
+            margin-top: 22px;
           }
-          .vp-grid-card:active .card-line { 
-            width: 100%; /* Expands when tapped on mobile */
+
+          .vp-grid-card:active .card-line {
+            width: 100%;
           }
         }
-      `}} />
+      `}</style>
     </section>
   );
 }

@@ -42,7 +42,9 @@ export default function RootLayout({
   return (
     <html lang="tr" suppressHydrationWarning>
       <body className={satoshi.className}>
+      
         <Providers>
+        <div className="grid-lines" />
           {children}
         </Providers>
       </body>

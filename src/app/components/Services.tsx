@@ -59,6 +59,7 @@ export default function Services() {
             opacity: 1,
             y: 0,
             duration: 0.9,
+            ease: "power3.out",
             scrollTrigger: {
               trigger: item,
               start: "top 85%",
@@ -79,23 +80,31 @@ export default function Services() {
       id="services"
       style={{
         backgroundColor: "var(--bg)",
-        padding: "var(--section-y) var(--section-x)",
+        padding: "140px var(--section-x) 100px",
         overflow: "hidden",
+        position: "relative",
       }}
     >
-      <div className="grid-lines" style={{ opacity: 0.1 }} />
+      {/* ✅ FIXED DOT BACKGROUND */}
+      <div className="services-dots" />
 
       <div
         className="blueprint-container"
-        style={{ maxWidth: "1200px", margin: "0 auto", position: "relative" }}
+        style={{
+          maxWidth: "1100px",
+          margin: "0 auto",
+          position: "relative",
+          zIndex: 1,
+        }}
       >
-        <div style={{ marginBottom: "80px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "15px", marginBottom: "20px" }}>
-            <div style={{ width: "30px", height: "1px", backgroundColor: "var(--accent)" }} />
+        {/* HEADER */}
+        <div style={{ marginBottom: "64px", paddingTop: "48px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "18px" }}>
+            <div style={{ width: "28px", height: "1px", backgroundColor: "var(--accent)" }} />
             <span
               style={{
                 color: "var(--accent)",
-                letterSpacing: "0.4em",
+                letterSpacing: "0.35em",
                 fontSize: "0.7rem",
                 fontWeight: 500,
                 textTransform: "uppercase",
@@ -107,11 +116,12 @@ export default function Services() {
 
           <h2
             style={{
-              fontSize: "clamp(2.2rem, 5vw, 4rem)",
+              fontSize: "clamp(2rem, 4.2vw, 3.2rem)",
               fontWeight: 500,
               color: "var(--text)",
-              lineHeight: 1.08,
+              lineHeight: 1.04,
               margin: 0,
+              maxWidth: "600px",
             }}
           >
             Kusursuz Süreç,
@@ -120,59 +130,63 @@ export default function Services() {
           </h2>
         </div>
 
+        {/* SPINE */}
         <div
           className="spine-line"
           style={{
             position: "absolute",
             left: "20px",
-            top: "180px",
+            top: "220px",
             bottom: 0,
             width: "1px",
-            backgroundColor: "var(--accent)",
+            background:
+              "linear-gradient(to bottom, rgba(93,211,182,0.1), rgba(93,211,182,0.4), rgba(93,211,182,0.15))",
             transformOrigin: "top",
-            opacity: 0.2,
-            zIndex: 0,
+            opacity: 0.4,
           }}
         />
 
+        {/* ITEMS */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "72px",
+            gap: "44px",
             position: "relative",
             zIndex: 1,
           }}
         >
           {steps.map((step, i) => (
-            <div key={i} className="process-item" style={{ paddingLeft: "60px", position: "relative" }}>
+            <div key={i} className="process-item" style={{ paddingLeft: "52px", position: "relative" }}>
               <div
                 className="process-dot"
                 style={{
                   position: "absolute",
-                  left: "15px",
+                  left: "14px",
                   top: "8px",
                   width: "10px",
                   height: "10px",
                   borderRadius: "50%",
                   backgroundColor: "var(--accent)",
-                  border: "4px solid var(--bg)",
+                  border: "3px solid var(--bg)",
                 }}
               />
 
-              <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-                <span style={{ fontFamily: "monospace", fontSize: "1rem", color: "var(--accent)", opacity: 0.8 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                <span style={{ fontFamily: "monospace", fontSize: "0.95rem", color: "var(--accent)", opacity: 0.8 }}>
                   {step.num}
                 </span>
-                <h3 style={{ fontSize: "clamp(1.5rem, 3vw, 2.4rem)", fontWeight: 500, margin: 0 }}>
+
+                <h3 style={{ fontSize: "clamp(1.4rem, 2.5vw, 2.2rem)", fontWeight: 500, margin: 0 }}>
                   {step.title}
                 </h3>
+
                 <p
                   style={{
-                    fontSize: "1.04rem",
+                    fontSize: "1rem",
                     color: "var(--text-muted)",
-                    lineHeight: 1.7,
-                    maxWidth: "520px",
+                    lineHeight: 1.65,
+                    maxWidth: "480px",
                     margin: 0,
                   }}
                 >
@@ -185,6 +199,38 @@ export default function Services() {
       </div>
 
       <style jsx>{`
+        /* DOT BACKGROUND FIX */
+        .services-dots {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          z-index: 0;
+
+          background-image: radial-gradient(
+            circle,
+            rgba(255, 255, 227, 0.14) 1px,
+            transparent 1px
+          );
+
+          background-size: 28px 28px;
+          opacity: 0.55;
+
+          mask-image: linear-gradient(
+            to bottom,
+            transparent,
+            black 12%,
+            black 88%,
+            transparent
+          );
+          -webkit-mask-image: linear-gradient(
+            to bottom,
+            transparent,
+            black 12%,
+            black 88%,
+            transparent
+          );
+        }
+
         @media (min-width: 960px) {
           .spine-line {
             left: 50% !important;
@@ -196,33 +242,34 @@ export default function Services() {
           }
 
           .process-item:nth-child(odd) {
-            align-self: flex-start !important;
-            padding-right: 80px !important;
-            text-align: right !important;
+            align-self: flex-start;
+            padding-right: 48px !important;
+            text-align: right;
           }
 
           .process-item:nth-child(even) {
-            align-self: flex-end !important;
-            padding-left: 80px !important;
+            align-self: flex-end;
+            padding-left: 48px !important;
           }
 
           .process-item:nth-child(odd) .process-dot {
-            left: auto !important;
-            right: -5px !important;
+            left: auto;
+            right: -6px;
           }
 
           .process-item:nth-child(even) .process-dot {
-            left: -5px !important;
+            left: -6px;
           }
 
           .process-item:nth-child(odd) p {
-            margin-left: auto !important;
+            margin-left: auto;
           }
         }
 
-        @media (max-width: 959px) {
-          .process-item {
-            padding-left: 52px !important;
+        @media (max-width: 768px) {
+          .services-dots {
+            background-size: 22px 22px;
+            opacity: 0.3;
           }
         }
       `}</style>

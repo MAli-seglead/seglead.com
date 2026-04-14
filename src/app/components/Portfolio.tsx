@@ -63,9 +63,17 @@ export default function Portfolio() {
           );
         }
 
-        if (title) tl.fromTo(title, { y: 70, opacity: 0 }, { y: 0, opacity: 1 }, 0.2);
-        if (details) tl.fromTo(details, { y: 36, opacity: 0 }, { y: 0, opacity: 1 }, 0.28);
-        if (year) tl.fromTo(year, { opacity: 0, scale: 0.85 }, { opacity: 0.05, scale: 1 }, 0);
+        if (title) {
+          tl.fromTo(title, { y: 70, opacity: 0 }, { y: 0, opacity: 1 }, 0.2);
+        }
+
+        if (details) {
+          tl.fromTo(details, { y: 36, opacity: 0 }, { y: 0, opacity: 1 }, 0.28);
+        }
+
+        if (year) {
+          tl.fromTo(year, { opacity: 0, scale: 0.9 }, { opacity: 0.045, scale: 1 }, 0);
+        }
       });
     }, containerRef);
 
@@ -76,137 +84,52 @@ export default function Portfolio() {
     <section
       ref={containerRef}
       id="work"
-      style={{ backgroundColor: "var(--bg)", padding: "120px 0", position: "relative" }}
+      style={{
+        backgroundColor: "var(--bg)",
+        padding: "120px 0 90px",
+        position: "relative",
+      }}
     >
-      <div className="grid-lines" style={{ opacity: 0.1 }} />
+      <div className="grid-lines" style={{ opacity: 0.35 }} />
 
-      <div style={{ padding: "0 var(--section-x)", marginBottom: "8vh" }}>
-        <span
-          style={{
-            color: "var(--accent)",
-            letterSpacing: "0.6em",
-            fontSize: "0.7rem",
-            fontWeight: 700,
-            textTransform: "uppercase",
-          }}
-        >
-          Selected Works
-        </span>
+      <div className="portfolio-head">
+        <span className="portfolio-kicker">Selected Works</span>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <div className="portfolio-list">
         {projects.map((project, i) => (
-          <div
-            key={i}
-            className="project-row"
-            style={{
-              width: "100%",
-              minHeight: "100svh",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "relative",
-              padding: "0 var(--section-x)",
-              overflow: "hidden",
-              borderBottom: "1px solid var(--border)",
-            }}
-          >
-            <div
-              className="project-year"
-              style={{
-                position: "absolute",
-                fontSize: "35vw",
-                fontWeight: 900,
-                color: "var(--text)",
-                opacity: 0,
-                left: "-5%",
-                bottom: "-5%",
-                pointerEvents: "none",
-                zIndex: 0,
-                lineHeight: 1,
-              }}
-            >
-              {project.year}
-            </div>
+          <div key={i} className="project-row">
+            <div className="project-year">{project.year}</div>
 
-            <div style={{ width: "100%", maxWidth: "1300px", zIndex: 1 }}>
-              <div
-                className="img-inner"
-                style={{
-                  position: "relative",
-                  width: "100%",
-                  aspectRatio: "16 / 8.6",
-                  overflow: "hidden",
-                  borderRadius: "4px",
-                  border: "1px solid var(--border)",
-                }}
-              >
+            <div className="project-shell">
+              <div className="img-inner">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={project.img}
                   alt={project.title}
                   loading="lazy"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    filter: "grayscale(100%) contrast(1.08)",
-                  }}
+                  className="project-image"
                 />
               </div>
 
               <div className="project-meta">
-                <div>
-                  <h3
-                    className="project-title"
-                    style={{
-                      fontSize: "clamp(3rem, 8vw, 8rem)",
-                      fontWeight: 500,
-                      color: "var(--text)",
-                      lineHeight: 0.9,
-                      letterSpacing: "-0.04em",
-                      margin: 0,
-                    }}
-                  >
-                    {project.title}
-                  </h3>
+                <div className="project-title-wrap">
+                  <h3 className="project-title">{project.title}</h3>
                 </div>
 
-                <div
-                  className="project-details"
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "24px",
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <p
-                    style={{
-                      fontSize: "1.05rem",
-                      color: "var(--text-muted)",
-                      lineHeight: 1.7,
-                      maxWidth: "460px",
-                      margin: 0,
-                    }}
-                  >
-                    {project.desc}
-                  </p>
+                <div className="project-details">
+                  <p className="project-desc">{project.desc}</p>
 
                   <div className="project-links">
-                    <span
-                      style={{
-                        color: "var(--accent)",
-                        fontFamily: "monospace",
-                        fontSize: "1rem",
-                        letterSpacing: "0.08em",
-                      }}
-                    >
-                      {project.category}
-                    </span>
+                    <span className="project-category">{project.category}</span>
 
-                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="live-link">
-                      LIVE SITE
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="live-link"
+                    >
+                      <span>LIVE SITE</span>
                       <svg
                         width="18"
                         height="18"
@@ -230,12 +153,137 @@ export default function Portfolio() {
         ))}
       </div>
 
+      <div className="portfolio-footer">
+        <a href="#contact" className="view-all-btn">
+          <span>View All Works</span>
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="7" y1="17" x2="17" y2="7" />
+            <polyline points="7 7 17 7 17 17" />
+          </svg>
+        </a>
+      </div>
+
       <style jsx>{`
+        .portfolio-head {
+          padding: 0 var(--section-x);
+          margin-bottom: 8vh;
+        }
+
+        .portfolio-kicker {
+          color: var(--accent);
+          letter-spacing: 0.6em;
+          font-size: 0.7rem;
+          font-weight: 700;
+          text-transform: uppercase;
+        }
+
+        .portfolio-list {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .project-row {
+          width: 100%;
+          min-height: 100svh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          padding: 0 var(--section-x);
+          overflow: visible;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .project-year {
+          position: absolute;
+          left: 0%;
+          bottom: -4%;
+          z-index: 0;
+          pointer-events: none;
+          font-size: 34vw;
+          font-weight: 900;
+          line-height: 0.86;
+          color: var(--text);
+          opacity: 0;
+          user-select: none;
+        }
+
+        .project-shell {
+          width: 100%;
+          max-width: 1300px;
+          position: relative;
+          z-index: 1;
+          padding-bottom: 48px;
+        }
+
+        .img-inner {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 16 / 8.6;
+          overflow: hidden;
+          border-radius: 4px;
+          border: 1px solid var(--border);
+        }
+
+        .project-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          filter: grayscale(100%) contrast(1.1) brightness(0.9);
+          transition: filter 0.6s ease, transform 0.6s ease;
+        }
+
+        .project-row:hover .project-image {
+          filter: grayscale(0%) contrast(1.08) brightness(0.96);
+          transform: scale(1.015);
+        }
+
         .project-meta {
-          margin-top: 40px;
+          margin-top: 76px;
+          padding-bottom: 8px;
           display: grid;
-          grid-template-columns: 1.2fr 1fr;
-          gap: 56px;
+          grid-template-columns: minmax(0, 1.15fr) minmax(320px, 1fr);
+          gap: 84px;
+          align-items: start;
+        }
+
+        .project-title-wrap {
+          position: relative;
+          z-index: 2;
+        }
+
+        .project-title {
+          margin: 0;
+          font-size: clamp(2.8rem, 7vw, 7rem);
+          font-weight: 500;
+          color: var(--text);
+          line-height: 0.92;
+          letter-spacing: -0.04em;
+        }
+
+        .project-details {
+          display: flex;
+          flex-direction: column;
+          gap: 26px;
+          justify-content: flex-start;
+        }
+
+        .project-desc {
+          font-size: 1.05rem;
+          color: var(--text-muted);
+          line-height: 1.75;
+          max-width: 500px;
+          margin: 0;
         }
 
         .project-links {
@@ -245,17 +293,73 @@ export default function Portfolio() {
           flex-wrap: wrap;
         }
 
+        .project-category {
+          color: var(--accent);
+          font-family: monospace;
+          font-size: 1rem;
+          letter-spacing: 0.08em;
+        }
+
         .live-link {
           display: inline-flex;
           align-items: center;
           gap: 10px;
-          font-size: 0.9rem;
+          font-size: 1rem;
           font-weight: 700;
-          transition: color 0.2s ease;
+          letter-spacing: 0.08em;
+          transition: color 0.25s ease;
+        }
+
+        .live-link svg {
+          transition: transform 0.25s ease;
         }
 
         .live-link:hover {
           color: var(--accent);
+        }
+
+        .live-link:hover svg {
+          transform: translate(3px, -3px);
+        }
+
+        .portfolio-footer {
+          padding: 56px var(--section-x) 0;
+          display: flex;
+          justify-content: center;
+        }
+
+        .view-all-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 15px 22px;
+          border: 1px solid var(--border);
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.02);
+          color: var(--text);
+          font-size: 0.95rem;
+          font-weight: 500;
+          letter-spacing: 0.04em;
+          transition:
+            border-color 0.25s ease,
+            background 0.25s ease,
+            transform 0.25s ease,
+            color 0.25s ease;
+        }
+
+        .view-all-btn svg {
+          transition: transform 0.25s ease;
+        }
+
+        .view-all-btn:hover {
+          border-color: rgba(93, 211, 182, 0.32);
+          background: rgba(255, 255, 255, 0.04);
+          color: var(--accent);
+          transform: translateY(-2px);
+        }
+
+        .view-all-btn:hover svg {
+          transform: translate(3px, -3px);
         }
 
         @media (max-width: 960px) {
@@ -265,9 +369,15 @@ export default function Portfolio() {
             padding-bottom: 72px !important;
           }
 
+          .project-shell {
+            padding-bottom: 28px;
+          }
+
           .project-meta {
             grid-template-columns: 1fr !important;
             gap: 28px !important;
+            margin-top: 34px !important;
+            padding-bottom: 0 !important;
           }
 
           .project-title {
@@ -275,7 +385,10 @@ export default function Portfolio() {
           }
 
           .project-year {
-            font-size: 46vw !important;
+            font-size: 44vw !important;
+            left: 0 !important;
+            bottom: 2% !important;
+            line-height: 0.82 !important;
           }
 
           .img-inner {
@@ -286,6 +399,16 @@ export default function Portfolio() {
             gap: 16px !important;
             align-items: flex-start !important;
             flex-direction: column;
+          }
+
+          .portfolio-footer {
+            padding-top: 40px;
+          }
+
+          .view-all-btn {
+            width: 100%;
+            justify-content: center;
+            max-width: 320px;
           }
         }
       `}</style>
